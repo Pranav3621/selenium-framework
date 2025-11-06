@@ -46,4 +46,9 @@ public class ProductCatalogue extends AbstractComponent{
 		waitForElementToAppear(toastMessage);
 		waitForElementToDisappear(spinner);
 	}
+	
+	public boolean verifyProductsExistence(String productName) {
+		boolean match = getProductsList().stream().anyMatch(product -> product.findElement(By.tagName("b")).getText().equals(productName) );
+		return match;
+	}
 }

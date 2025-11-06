@@ -2,18 +2,30 @@ package pranav_automation_project.SeleniumFrameworkDesign.TestComponents;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
+import java.io.File;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pranav_automation_project.SeleniumFrameworkDesign.pageObjects.LandingPage;
 
@@ -45,7 +57,7 @@ public class BaseTest {
 		return driver;
 	}
 	
-	@BeforeTest
+	@BeforeMethod(alwaysRun=true)
 	public LandingPage launchApplication() throws IOException {
 		driver = initializeDriver();
 		landingPage = new LandingPage(driver);
@@ -53,8 +65,36 @@ public class BaseTest {
 		return landingPage;
 	}
 	
-//	@AfterTest
-//	public void tearDown() {
-//		driver.close();
-//	}
+	@AfterMethod(alwaysRun=true)
+	public void tearDown() {
+		driver.close();
+	}
+	
+	public List<HashMap<String,String>> getJsonDataToMap(String filePath) throws IOException{
+		String jsonContent = FileUtils.readFileToString(
+			    new File(filePath),
+			    StandardCharsets.UTF_8
+			);
+
+		
+		ObjectMapper mapper = new ObjectMapper();
+		List<HashMap<String, String>> data = mapper.readValue(
+		    jsonContent,
+		    new TypeReference<List<HashMap<String, String>>>() {}
+		);
+
+		return data;
+	}
+	
+	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException, WebDriverException {
+		TakesScreenshot ts = (TakesScreenshot)driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+		FileUtils.copyFile(source, file);
+		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
+	}
+
+	
+
+	
 }

@@ -48,11 +48,7 @@ public class CheckoutPage extends AbstractComponent{
 		}
 	}
 	
-	public ConfirmationPage submitOrder() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-		// Wait until ta-backdrop disappears
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ta-backdrop")));
+	public ConfirmationPage submitOrder() {		
 		submitButton.click();
 		return new ConfirmationPage(driver);
 	}

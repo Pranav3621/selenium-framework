@@ -5,8 +5,10 @@
     <classes>
       <class name="pranav_automation_project.SeleniumFrameworkDesign.tests.SubmitOrderTest">
         <methods>
+          <include name="verifyOrderTest"/>
           <include name="launchApplication"/>
           <include name="submitOrderTest"/>
+          <include name="tearDown"/>
         </methods>
       </class> <!-- pranav_automation_project.SeleniumFrameworkDesign.tests.SubmitOrderTest -->
     </classes>

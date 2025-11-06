@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pranav_automation_project.SeleniumFrameworkDesign.pageObjects.CartPage;
+import pranav_automation_project.SeleniumFrameworkDesign.pageObjects.OrdersPage;
 
 public class AbstractComponent {
 	
@@ -24,6 +25,13 @@ public class AbstractComponent {
 	
 	@FindBy(css="[routerlink*='cart']")
 	WebElement cartHeader;
+	
+	@FindBy(css="[routerlink*='myorders']")
+	WebElement ordersHeader;
+	
+	@FindBy(className="fa-sign-out")
+	static
+	WebElement signOutButton;
 	
 	public void waitForElementToAppear(By findBy) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -52,5 +60,10 @@ public class AbstractComponent {
 	public CartPage goToCartPage() {
 		cartHeader.click();
 		return new CartPage(driver);
+	}
+	
+	public OrdersPage goToOrdersPage() {
+		ordersHeader.click();
+		return new OrdersPage(driver);
 	}
 }

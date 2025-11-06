@@ -30,6 +30,9 @@ public class LandingPage extends AbstractComponent{
 	@FindBy(xpath="/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]")
 	WebElement errorMessage;
 	
+	@FindBy(css="[aria-label='Incorrect email or password.']")
+	WebElement loginErrorMessage;
+	
 	By toastMessage = By.cssSelector("#toast-container");
 	
 	public void goTo() {
@@ -46,5 +49,9 @@ public class LandingPage extends AbstractComponent{
 		passwordEle.sendKeys(password);
 		submit.click();
 		return new ProductCatalogue(driver);
+	}
+	
+	public String getLoginErrorMessage() {
+		return loginErrorMessage.getText();
 	}
 }
