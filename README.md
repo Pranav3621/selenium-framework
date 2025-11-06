@@ -9,7 +9,7 @@ A Selenium automation framework built using Maven, TestNG, and Page Object Model
 - TestNG
 - Maven
 - Page Object Model (POM)
+- Extent Reports 
 
 **To Be Added**
-- Extent Reports 
 - Jenkins (for CI/CD)
